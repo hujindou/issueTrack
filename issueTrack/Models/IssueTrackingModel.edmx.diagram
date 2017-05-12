@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e3f8d0e17ddd4d388b4cd24b66b592a8" Name="Diagram1">
+        <EntityTypeShape EntityType="testdbModel.TBUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="testdbModel.TBCreator" Width="1.5" PointX="5.25" PointY="5" />
+        <EntityTypeShape EntityType="testdbModel.TBRepository" Width="1.5" PointX="3" PointY="5" />
+        <AssociationConnector Association="testdbModel.FK_TBCreators_TBRepositories" />
+        <AssociationConnector Association="testdbModel.FK_TBRepositories_TBUsers" />
+        <EntityTypeShape EntityType="testdbModel.TBIssue" Width="1.5" PointX="7.5" PointY="4.875" />
+        <EntityTypeShape EntityType="testdbModel.TBReply" Width="1.5" PointX="3.375" PointY="0.75" />
+        <AssociationConnector Association="testdbModel.FK_TBIssues_TBCreators" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

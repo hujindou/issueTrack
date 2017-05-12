@@ -1,0 +1,50 @@
+﻿@model issueTrack.Models.TBRepository
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TBRepository</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FDRepositoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDRepositoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDCreationTimestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDCreationTimestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TBUser.FDNickname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TBUser.FDNickname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FDRepositoryID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

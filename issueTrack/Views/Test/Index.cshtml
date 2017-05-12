@@ -1,0 +1,9 @@
+﻿@model System.Collections.Hashtable
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Controller Thread is @Model["abc"]</h2>
+<h2>View Thread is @System.Threading.Thread.CurrentThread.ManagedThreadId</h2>
+

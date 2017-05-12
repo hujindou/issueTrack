@@ -1,0 +1,99 @@
+﻿@model issueTrack.Models.DetailViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TBRepository</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Repository.FDRepositoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Repository.FDRepositoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Repository.FDDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Repository.FDDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Repository.FDCreationTimestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Repository.FDCreationTimestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Repository.TBUser.FDNickname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Repository.TBUser.FDNickname)
+        </dd>
+
+    </dl>
+    <div>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#issueCreatePart" aria-expanded="false" aria-controls="issueCreatePart">
+            Create An Issue
+        </button>
+        <div class="collapse" id="issueCreatePart">
+            @Html.Partial("CreateIssuePartialView", new issueTrack.Models.IssueCreateViewModel { RepositoryID = Model.RepositoryID , CreatorName = Model.CreatorName })
+        </div>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#creatorCreatePart" aria-expanded="false" aria-controls="creatorCreatePart">
+            Create A Creator
+        </button>
+        <div class="collapse" id="creatorCreatePart">
+            @Html.Partial("CreateCreatorPartialView", new issueTrack.Models.CreatorCreateViewModel {  RepositoryID = Model.RepositoryID})
+        </div>
+    </div>
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AllCreators)
+                </th>
+            </tr>
+
+            @foreach (var item in Model.AllCreators)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FDCreator)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AllIssues)
+                </th>
+            </tr>
+
+            @foreach (var item in Model.AllIssues)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.FDIssueTitle, "Details", "Issue", new { id = item.FDIssueID }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        
+    </div>
+</div>

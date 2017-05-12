@@ -1,0 +1,56 @@
+﻿@model issueTrack.Models.TBRepository
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TBRepository</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FDRepositoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDRepositoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDCreationTimestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDCreationTimestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TBUser.FDNickname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TBUser.FDNickname)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

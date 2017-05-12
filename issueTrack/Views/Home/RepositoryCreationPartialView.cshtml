@@ -1,0 +1,91 @@
+﻿@model issueTrack.Models.RepositoryCreationViewModel
+
+<script>
+    $(document).ready(function () {
+        $("#btnCommit").on("click", function (e) {
+            //alert("executed");
+            //alert("Valid: " + form.valid());
+            e.preventDefault();
+            var form = $("#myForm");
+            var validator = form.validate();
+            var d = { repositoryName : $("#RepositoryName").val()};
+            if (form.valid() == true)
+            {
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("ValidateRepositoryName", "Repository")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify( d ),
+                    success: successFunc,
+                    error: errorFunc
+                });
+            }
+        @*$("#myForm").validate({
+            submitHandler: function (form, event) {
+                $(form).ajaxSubmit();
+                event.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("ValidateRepositoryName", "Repository")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: "{ 'abc': 'testing' }",
+                    async: false,
+                    success: function successFunc1(data, status) {
+                        alert("success");
+                        if (data == "success") {
+                            //form.submit();
+                            event.preventDefault();
+                        }
+                        else {
+                            event.preventDefault();
+                            var validator = $("#myForm").validate();
+                            validator.showErrors({ "RepositoryName": "Repository name already exist" });
+                        }
+                    },
+                    error: errorFunc
+                }).done(function (data, textStatus, jqXHR) {
+                    alert(data);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("fail");
+                });
+                
+                //return false;
+                //form.submit();
+            }
+        });*@
+
+            function successFunc(data, status) {
+                if (data == "notExist") {
+                    $("#myForm").submit();
+                }
+                else {
+                    validator.showErrors({ "RepositoryName": data });
+                }
+            }
+
+            function errorFunc() {
+                alert('error');
+            }
+        });
+    });
+</script>
+
+@using (Html.BeginForm("Create", "Repository", FormMethod.Post, new { role = "form", id = "myForm" }))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label for="RepositoryName">Repository Name</label>
+        @*<input type="text" class="form-control" id="RepositoryName" name="RepositoryName">*@
+        @Html.TextBoxFor(m => m.RepositoryName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RepositoryName, "", new { @class = "text-danger" , id = "RepositoryName" })
+    </div>
+    <div class="form-group">
+        <label for="RepositoryDescription">Repository Description</label>
+        @*<textarea class="form-control" rows="5" id="RepositoryDescription" name="RepositoryDescription"></textarea>*@
+        @Html.TextAreaFor(m => m.RepositoryDescription, new { @class = "form-control", rows = "8" })
+        @Html.ValidationMessageFor(m => m.RepositoryDescription, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-default btn-success  btn-block btn-lg" id="btnCommit">Create</button>
+}

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<issueTrack.Models.TBRepository>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FDRepositoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FDDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FDCreationTimestamp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TBUser.FDNickname)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FDRepositoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FDDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FDCreationTimestamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TBUser.FDNickname)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FDRepositoryID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FDRepositoryID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FDRepositoryID })
+        </td>
+    </tr>
+}
+
+</table>

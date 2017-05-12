@@ -1,0 +1,57 @@
+﻿@model IEnumerable<issueTrack.Models.TBIssue>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FDIssueTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FDIssueContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FDState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FDCreationTimestamp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TBCreator.FDToken)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FDIssueTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FDIssueContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FDState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FDCreationTimestamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TBCreator.FDToken)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FDIssueID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FDIssueID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FDIssueID })
+        </td>
+    </tr>
+}
+
+</table>

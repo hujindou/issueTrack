@@ -1,0 +1,58 @@
+﻿@model issueTrack.Models.TBIssue
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TBIssue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FDIssueTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDIssueTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDIssueContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDIssueContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FDCreationTimestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FDCreationTimestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TBCreator.FDToken)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TBCreator.FDToken)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FDIssueID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
