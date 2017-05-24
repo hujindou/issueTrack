@@ -84,7 +84,7 @@ namespace issueTrack.Controllers
                 SqlParameter passwordParameter = new SqlParameter("FDPassword", SqlDbType.VarChar, Common.Const.PasswordLength_Max);
                 passwordParameter.Value = p.Password;
 
-                SqlParameter nicknameParameter = new SqlParameter("FDNickname", SqlDbType.VarChar, Common.Const.NicknameLength_Max);
+                SqlParameter nicknameParameter = new SqlParameter("FDNickname", SqlDbType.NVarChar, Common.Const.NicknameLength_Max);
                 nicknameParameter.Value = p.Nickname;
 
                 int res = db.Database.ExecuteSqlCommand("update TBUsers set FDNickname = @FDNickname , FDPassword = HASHBYTES('SHA2_256',@FDPassword) ,FDUpdateTimestamp = SYSDATETIME() where FDEmailOrPhone = @FDEmailOrPhone", emailParameter, passwordParameter, nicknameParameter);

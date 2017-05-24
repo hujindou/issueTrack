@@ -16,5 +16,7 @@ namespace issueTrack.Models
         public List<TBCreator> AllCreators { get; set; }
 
         public List<TBIssue> AllIssues { get; set; }
+
+        public List<int> PageList { get; set; } = new List<int>();
     }
 }

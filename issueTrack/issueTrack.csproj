@@ -277,6 +277,7 @@
       <DependentUpon>IssueTrackingModel.edmx</DependentUpon>
       <LastGenOutput>IssueTrackingModel.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\IssueTrackingModel.edmx.sql" />
     <Content Include="Models\IssueTrackingModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IssueTrackingModel.edmx</DependentUpon>

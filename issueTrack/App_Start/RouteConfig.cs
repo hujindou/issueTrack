@@ -18,6 +18,12 @@ namespace issueTrack
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "RepositoryPage",
+                url: "Repository/Details/{id}/{pageNumber}",
+                defaults: new { controller = "Repository", action = "Details", id = UrlParameter.Optional , pageNumber = UrlParameter.Optional }
+            );
         }
     }
 }

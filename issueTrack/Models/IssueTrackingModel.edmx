@@ -4,119 +4,119 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="testdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="TBCreators">
-          <Key>
-            <PropertyRef Name="FDRepositoryID" />
-            <PropertyRef Name="FDCreator" />
-          </Key>
-          <Property Name="FDRepositoryID" Type="int" Nullable="false" />
-          <Property Name="FDCreator" Type="nvarchar" MaxLength="32" Nullable="false" />
-          <Property Name="FDToken" Type="nvarchar" MaxLength="32" Nullable="false" />
-          <Property Name="FDLoginMethod" Type="int" Nullable="false" />
-          <Property Name="FDCreationTImestamp" Type="datetime2" Precision="3" Nullable="false" StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <EntityType Name="TBIssues">
-          <Key>
-            <PropertyRef Name="FDIssueID" />
-          </Key>
-          <Property Name="FDIssueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FDCreator" Type="nvarchar" MaxLength="32" Nullable="false" />
-          <Property Name="FDRepositoryID" Type="int" Nullable="false" />
-          <Property Name="FDIssueTitle" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="FDIssueContent" Type="nvarchar" MaxLength="2048" />
-          <Property Name="FDState" Type="int" Nullable="false" />
-          <Property Name="FDCreationTimestamp" Type="datetime2" Precision="3" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TBReplies">
-          <Key>
-            <PropertyRef Name="FDReplyID" />
-          </Key>
-          <Property Name="FDReplyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FDCreator" Type="nvarchar" MaxLength="32" Nullable="false" />
-          <Property Name="FDIssueIDOrReplyID" Type="int" Nullable="false" />
-          <Property Name="FDReferenceType" Type="int" Nullable="false" />
-          <Property Name="FDReplyContent" Type="nvarchar" MaxLength="1024" Nullable="false" />
-          <Property Name="FDCreationTimestamp" Type="datetime2" Precision="3" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TBRepositories">
-          <Key>
-            <PropertyRef Name="FDRepositoryID" />
-          </Key>
-          <Property Name="FDRepositoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FDOwner" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="FDRepositoryName" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="FDDescription" Type="nvarchar" MaxLength="2048" />
-          <Property Name="FDCreationTimestamp" Type="datetime2" Precision="3" Nullable="false" StoreGeneratedPattern="Computed" />
-        </EntityType>
-        <EntityType Name="TBUsers">
-          <Key>
-            <PropertyRef Name="FDEmailOrPhone" />
-          </Key>
-          <Property Name="FDEmailOrPhone" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="FDNickname" Type="nvarchar" MaxLength="32" Nullable="false" />
-          <Property Name="FDPassword" Type="varbinary" MaxLength="32" />
-          <Property Name="FDCreationTimestamp" Type="datetime2" Precision="3" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="FDUpdateTimestamp" Type="datetime2" Precision="3" />
-        </EntityType>
-        <Association Name="FK_TBCreators_TBRepositories">
-          <End Role="TBRepositories" Type="Self.TBRepositories" Multiplicity="1" />
-          <End Role="TBCreators" Type="Self.TBCreators" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBRepositories">
-              <PropertyRef Name="FDRepositoryID" />
-            </Principal>
-            <Dependent Role="TBCreators">
-              <PropertyRef Name="FDRepositoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TBIssues_TBCreators">
-          <End Role="TBCreators" Type="Self.TBCreators" Multiplicity="1" />
-          <End Role="TBIssues" Type="Self.TBIssues" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBCreators">
-              <PropertyRef Name="FDRepositoryID" />
-              <PropertyRef Name="FDCreator" />
-            </Principal>
-            <Dependent Role="TBIssues">
-              <PropertyRef Name="FDRepositoryID" />
-              <PropertyRef Name="FDCreator" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TBRepositories_TBUsers">
-          <End Role="TBUsers" Type="Self.TBUsers" Multiplicity="1" />
-          <End Role="TBRepositories" Type="Self.TBRepositories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBUsers">
-              <PropertyRef Name="FDEmailOrPhone" />
-            </Principal>
-            <Dependent Role="TBRepositories">
-              <PropertyRef Name="FDOwner" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="testdbModelStoreContainer">
-          <EntitySet Name="TBCreators" EntityType="Self.TBCreators" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TBIssues" EntityType="Self.TBIssues" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TBReplies" EntityType="Self.TBReplies" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TBRepositories" EntityType="Self.TBRepositories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TBUsers" EntityType="Self.TBUsers" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_TBCreators_TBRepositories" Association="Self.FK_TBCreators_TBRepositories">
-            <End Role="TBRepositories" EntitySet="TBRepositories" />
-            <End Role="TBCreators" EntitySet="TBCreators" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TBIssues_TBCreators" Association="Self.FK_TBIssues_TBCreators">
-            <End Role="TBCreators" EntitySet="TBCreators" />
-            <End Role="TBIssues" EntitySet="TBIssues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TBRepositories_TBUsers" Association="Self.FK_TBRepositories_TBUsers">
-            <End Role="TBUsers" EntitySet="TBUsers" />
-            <End Role="TBRepositories" EntitySet="TBRepositories" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="testdbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="testdbModelStoreContainer">
+    <EntitySet Name="TBUsers" EntityType="testdbModel.Store.TBUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TBCreators" EntityType="testdbModel.Store.TBCreators" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TBRepositories" EntityType="testdbModel.Store.TBRepositories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TBIssues" EntityType="testdbModel.Store.TBIssues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TBReplies" EntityType="testdbModel.Store.TBReplies" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_TBCreators_TBRepositories" Association="testdbModel.Store.FK_TBCreators_TBRepositories">
+      <End Role="TBRepository" EntitySet="TBRepositories" />
+      <End Role="TBCreator" EntitySet="TBCreators" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBRepositories_TBUsers" Association="testdbModel.Store.FK_TBRepositories_TBUsers">
+      <End Role="TBUser" EntitySet="TBUsers" />
+      <End Role="TBRepository" EntitySet="TBRepositories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBIssues_TBCreators" Association="testdbModel.Store.FK_TBIssues_TBCreators">
+      <End Role="TBCreator" EntitySet="TBCreators" />
+      <End Role="TBIssue" EntitySet="TBIssues" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TBUsers">
+    <Key>
+      <PropertyRef Name="FDEmailOrPhone" />
+    </Key>
+    <Property Name="FDEmailOrPhone" Type="varchar" Nullable="false" MaxLength="64" />
+    <Property Name="FDNickname" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="FDPassword" Type="varbinary" Nullable="true" MaxLength="32" />
+    <Property Name="FDCreationTimestamp" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="FDUpdateTimestamp" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="TBCreators">
+    <Key>
+      <PropertyRef Name="FDRepositoryID" />
+      <PropertyRef Name="FDCreator" />
+    </Key>
+    <Property Name="FDRepositoryID" Type="int" Nullable="false" />
+    <Property Name="FDCreator" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="FDToken" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="FDLoginMethod" Type="int" Nullable="false" />
+    <Property Name="FDCreationTImestamp" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TBRepositories">
+    <Key>
+      <PropertyRef Name="FDRepositoryID" />
+    </Key>
+    <Property Name="FDRepositoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FDOwner" Type="varchar" Nullable="false" MaxLength="64" />
+    <Property Name="FDRepositoryName" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="FDDescription" Type="nvarchar" Nullable="true" MaxLength="2048" />
+    <Property Name="FDCreationTimestamp" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TBIssues">
+    <Key>
+      <PropertyRef Name="FDIssueID" />
+    </Key>
+    <Property Name="FDIssueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FDCreator" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="FDRepositoryID" Type="int" Nullable="false" />
+    <Property Name="FDIssueTitle" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="FDIssueContent" Type="nvarchar" Nullable="true" MaxLength="2048" />
+    <Property Name="FDState" Type="int" Nullable="false" />
+    <Property Name="FDCreationTimestamp" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="TBReplies">
+    <Key>
+      <PropertyRef Name="FDReplyID" />
+    </Key>
+    <Property Name="FDReplyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FDCreator" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="FDIssueIDOrReplyID" Type="int" Nullable="false" />
+    <Property Name="FDReferenceType" Type="int" Nullable="false" />
+    <Property Name="FDReplyContent" Type="nvarchar" Nullable="false" MaxLength="1024" />
+    <Property Name="FDCreationTimestamp" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_TBCreators_TBRepositories">
+    <End Role="TBRepository" Type="testdbModel.Store.TBRepositories" Multiplicity="1" />
+    <End Role="TBCreator" Type="testdbModel.Store.TBCreators" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBRepository">
+        <PropertyRef Name="FDRepositoryID" />
+      </Principal>
+      <Dependent Role="TBCreator">
+        <PropertyRef Name="FDRepositoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBRepositories_TBUsers">
+    <End Role="TBUser" Type="testdbModel.Store.TBUsers" Multiplicity="1" />
+    <End Role="TBRepository" Type="testdbModel.Store.TBRepositories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBUser">
+        <PropertyRef Name="FDEmailOrPhone" />
+      </Principal>
+      <Dependent Role="TBRepository">
+        <PropertyRef Name="FDOwner" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBIssues_TBCreators">
+    <End Role="TBCreator" Type="testdbModel.Store.TBCreators" Multiplicity="1" />
+    <End Role="TBIssue" Type="testdbModel.Store.TBIssues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBCreator">
+        <PropertyRef Name="FDRepositoryID" />
+        <PropertyRef Name="FDCreator" />
+      </Principal>
+      <Dependent Role="TBIssue">
+        <PropertyRef Name="FDRepositoryID" />
+        <PropertyRef Name="FDCreator" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="testdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -209,7 +209,7 @@
           <Property Name="FDIssueTitle" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="FDIssueContent" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <Property Name="FDState" Type="Int32" Nullable="false" />
-          <Property Name="FDCreationTimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FDCreationTimestamp" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="TBCreator" Relationship="testdbModel.FK_TBIssues_TBCreators" FromRole="TBIssue" ToRole="TBCreator" />
         </EntityType>
         <EntityType Name="TBReply">
@@ -241,69 +241,68 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="testdbModelStoreContainer" CdmEntityContainer="testdbEntities">
-          <EntitySetMapping Name="TBUsers">
-            <EntityTypeMapping TypeName="testdbModel.TBUser">
-              <MappingFragment StoreEntitySet="TBUsers">
-                <ScalarProperty Name="FDUpdateTimestamp" ColumnName="FDUpdateTimestamp" />
-                <ScalarProperty Name="FDEmailOrPhone" ColumnName="FDEmailOrPhone" />
-                <ScalarProperty Name="FDNickname" ColumnName="FDNickname" />
-                <ScalarProperty Name="FDPassword" ColumnName="FDPassword" />
-                <ScalarProperty Name="FDCreationTimestamp" ColumnName="FDCreationTimestamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TBCreators">
-            <EntityTypeMapping TypeName="testdbModel.TBCreator">
-              <MappingFragment StoreEntitySet="TBCreators">
-                <ScalarProperty Name="FDCreationTImestamp" ColumnName="FDCreationTImestamp" />
-                <ScalarProperty Name="FDLoginMethod" ColumnName="FDLoginMethod" />
-                <ScalarProperty Name="FDToken" ColumnName="FDToken" />
-                <ScalarProperty Name="FDCreator" ColumnName="FDCreator" />
-                <ScalarProperty Name="FDRepositoryID" ColumnName="FDRepositoryID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TBRepositories">
-            <EntityTypeMapping TypeName="testdbModel.TBRepository">
-              <MappingFragment StoreEntitySet="TBRepositories">
-                <ScalarProperty Name="FDCreationTimestamp" ColumnName="FDCreationTimestamp" />
-                <ScalarProperty Name="FDDescription" ColumnName="FDDescription" />
-                <ScalarProperty Name="FDRepositoryName" ColumnName="FDRepositoryName" />
-                <ScalarProperty Name="FDOwner" ColumnName="FDOwner" />
-                <ScalarProperty Name="FDRepositoryID" ColumnName="FDRepositoryID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TBIssues">
-            <EntityTypeMapping TypeName="testdbModel.TBIssue">
-              <MappingFragment StoreEntitySet="TBIssues">
-                <ScalarProperty Name="FDCreationTimestamp" ColumnName="FDCreationTimestamp" />
-                <ScalarProperty Name="FDState" ColumnName="FDState" />
-                <ScalarProperty Name="FDIssueContent" ColumnName="FDIssueContent" />
-                <ScalarProperty Name="FDIssueTitle" ColumnName="FDIssueTitle" />
-                <ScalarProperty Name="FDRepositoryID" ColumnName="FDRepositoryID" />
-                <ScalarProperty Name="FDCreator" ColumnName="FDCreator" />
-                <ScalarProperty Name="FDIssueID" ColumnName="FDIssueID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TBReplies">
-            <EntityTypeMapping TypeName="testdbModel.TBReply">
-              <MappingFragment StoreEntitySet="TBReplies">
-                <ScalarProperty Name="FDCreationTimestamp" ColumnName="FDCreationTimestamp" />
-                <ScalarProperty Name="FDReplyContent" ColumnName="FDReplyContent" />
-                <ScalarProperty Name="FDReferenceType" ColumnName="FDReferenceType" />
-                <ScalarProperty Name="FDIssueIDOrReplyID" ColumnName="FDIssueIDOrReplyID" />
-                <ScalarProperty Name="FDCreator" ColumnName="FDCreator" />
-                <ScalarProperty Name="FDReplyID" ColumnName="FDReplyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="testdbModelStoreContainer" CdmEntityContainer="testdbEntities">
+    <EntitySetMapping Name="TBUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(testdbModel.TBUser)">
+        <MappingFragment StoreEntitySet="TBUsers">
+          <ScalarProperty Name="FDEmailOrPhone" ColumnName="FDEmailOrPhone" />
+          <ScalarProperty Name="FDNickname" ColumnName="FDNickname" />
+          <ScalarProperty Name="FDPassword" ColumnName="FDPassword" />
+          <ScalarProperty Name="FDCreationTimestamp" ColumnName="FDCreationTimestamp" />
+          <ScalarProperty Name="FDUpdateTimestamp" ColumnName="FDUpdateTimestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBCreators">
+      <EntityTypeMapping TypeName="IsTypeOf(testdbModel.TBCreator)">
+        <MappingFragment StoreEntitySet="TBCreators">
+          <ScalarProperty Name="FDRepositoryID" ColumnName="FDRepositoryID" />
+          <ScalarProperty Name="FDCreator" ColumnName="FDCreator" />
+          <ScalarProperty Name="FDToken" ColumnName="FDToken" />
+          <ScalarProperty Name="FDLoginMethod" ColumnName="FDLoginMethod" />
+          <ScalarProperty Name="FDCreationTImestamp" ColumnName="FDCreationTImestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBRepositories">
+      <EntityTypeMapping TypeName="IsTypeOf(testdbModel.TBRepository)">
+        <MappingFragment StoreEntitySet="TBRepositories">
+          <ScalarProperty Name="FDRepositoryID" ColumnName="FDRepositoryID" />
+          <ScalarProperty Name="FDOwner" ColumnName="FDOwner" />
+          <ScalarProperty Name="FDRepositoryName" ColumnName="FDRepositoryName" />
+          <ScalarProperty Name="FDDescription" ColumnName="FDDescription" />
+          <ScalarProperty Name="FDCreationTimestamp" ColumnName="FDCreationTimestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBIssues">
+      <EntityTypeMapping TypeName="IsTypeOf(testdbModel.TBIssue)">
+        <MappingFragment StoreEntitySet="TBIssues">
+          <ScalarProperty Name="FDIssueID" ColumnName="FDIssueID" />
+          <ScalarProperty Name="FDCreator" ColumnName="FDCreator" />
+          <ScalarProperty Name="FDRepositoryID" ColumnName="FDRepositoryID" />
+          <ScalarProperty Name="FDIssueTitle" ColumnName="FDIssueTitle" />
+          <ScalarProperty Name="FDIssueContent" ColumnName="FDIssueContent" />
+          <ScalarProperty Name="FDState" ColumnName="FDState" />
+          <ScalarProperty Name="FDCreationTimestamp" ColumnName="FDCreationTimestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBReplies">
+      <EntityTypeMapping TypeName="IsTypeOf(testdbModel.TBReply)">
+        <MappingFragment StoreEntitySet="TBReplies">
+          <ScalarProperty Name="FDReplyID" ColumnName="FDReplyID" />
+          <ScalarProperty Name="FDCreator" ColumnName="FDCreator" />
+          <ScalarProperty Name="FDIssueIDOrReplyID" ColumnName="FDIssueIDOrReplyID" />
+          <ScalarProperty Name="FDReferenceType" ColumnName="FDReferenceType" />
+          <ScalarProperty Name="FDReplyContent" ColumnName="FDReplyContent" />
+          <ScalarProperty Name="FDCreationTimestamp" ColumnName="FDCreationTimestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -317,7 +316,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

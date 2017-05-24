@@ -48,13 +48,13 @@
             Create An Issue
         </button>
         <div class="collapse" id="issueCreatePart">
-            @Html.Partial("CreateIssuePartialView", new issueTrack.Models.IssueCreateViewModel { RepositoryID = Model.RepositoryID , CreatorName = Model.CreatorName })
+            @Html.Partial("CreateIssuePartialView", new issueTrack.Models.IssueCreateViewModel { RepositoryID = Model.RepositoryID, CreatorName = Model.CreatorName })
         </div>
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#creatorCreatePart" aria-expanded="false" aria-controls="creatorCreatePart">
             Create A Creator
         </button>
         <div class="collapse" id="creatorCreatePart">
-            @Html.Partial("CreateCreatorPartialView", new issueTrack.Models.CreatorCreateViewModel {  RepositoryID = Model.RepositoryID})
+            @Html.Partial("CreateCreatorPartialView", new issueTrack.Models.CreatorCreateViewModel { RepositoryID = Model.RepositoryID })
         </div>
     </div>
     <div>
@@ -94,6 +94,15 @@
             }
 
         </table>
-        
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+
+                @foreach(var item in Model.PageList)
+                {
+                    <li>@Html.RouteLink(item.ToString(), "RepositoryPage", new { id = Model.RepositoryID, pageNumber = item })</li>
+                }
+
+            </ul>
+        </nav>
     </div>
 </div>

@@ -48,8 +48,10 @@ namespace issueTrack.Controllers
         }
 
         // GET: Repository/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int? pageNumber)
         {
+            //System.IO.StreamWriter sw = new System.IO.StreamWriter(@"C:\123\1.txt", true);
+            //db.Database.Log = new Action<string>(o => System.Diagnostics.Debug.WriteLine(o));
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -70,12 +72,25 @@ namespace issueTrack.Controllers
             }
             m.Repository = tBRepository;
             m.AllCreators = db.TBCreators.Where(r => r.FDRepositoryID == m.RepositoryID).ToList();
-            m.AllIssues = db.TBIssues.Where(r => r.FDRepositoryID == m.RepositoryID).ToList();
+            for (int i = 0; i < Math.Ceiling(db.TBIssues.Count() / 10.0); i++)
+            {
+                m.PageList.Add(i + 1);
+            }
+            if (pageNumber == null)
+            {
+                m.AllIssues = db.TBIssues.Where(r => r.FDRepositoryID == m.RepositoryID).OrderBy(r => r.FDCreationTimestamp).Take(10).ToList();
+            }
+            else
+            {
+                m.AllIssues = db.TBIssues.Where(r => r.FDRepositoryID == m.RepositoryID).OrderBy(r => r.FDCreationTimestamp).Skip((pageNumber.Value - 1) * 10).Take(10).ToList();
+            }
             
+
             if (tBRepository == null)
             {
                 return HttpNotFound();
             }
+            //sw.Close();
             return View(m);
         }
 
